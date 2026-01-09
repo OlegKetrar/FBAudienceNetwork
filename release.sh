@@ -39,6 +39,8 @@ git fetch && git pull
 
 # update FBAudienceNetwork with cocoapods
 # TODO: replace with `update --repo-update`
+
+rbenv exec bundle install
 rbenv exec bundle exec pod install
 
 # parse fetched version
@@ -57,7 +59,7 @@ version=$(
 # TODO:
 
 current_dir="$(pwd)"
-framework_path="binaries/$version.xcframework.zip"
+framework_path="binaries/FBAudienceNetwork.xcframework.zip"
 
 rm -rf binaries
 mkdir -p binaries
@@ -67,12 +69,12 @@ zip -r -X \
   "$current_dir/Pods/FBAudienceNetwork/Static/FBAudienceNetwork.xcframework"
 
 framework_sha=$(swift package compute-checksum "$current_dir/$framework_path")
-framework_url="https://raw.githubusercontent.com/OlegKetrar/FBAudienceNetwork/refs/heads/releases/$framework_path"
+framework_url="https://github.com/OlegKetrar/FBAudienceNetwork/releases/download/$version/FBAudienceNetwork.xcframework.zip"
 
 # push Podfile & Podfile.lock changes
-git add .
-git commit -m "bump pods"
-git push
+# git add .
+# git commit -m "bump pods"
+# git push
 
 # update Package.swift with newest version on master
 git checkout master
