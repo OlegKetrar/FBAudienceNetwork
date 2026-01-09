@@ -17,7 +17,7 @@ let package = Package(
       .binaryTarget(
         name: "FBAudienceNetwork",
         url: "https://github.com/OlegKetrar/FBAudienceNetwork/releases/download/6.20.1/FBAudienceNetwork.xcframework.zip",
-        checksum: "05c22adf4ac10d90ad91525aa4296717ecd6a1ea1a314bdb240d40045c68937c"
+        checksum: "1e2e57194498010bf0179eb2feb838e425f28a7fc434e8c1b30bc409e241b365"
       )
     ]
 )
