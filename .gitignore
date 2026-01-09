@@ -28,3 +28,5 @@ xcuserdata/*
 *.xcuserstate
 project.xcworkspace/
 xcuserdata/
+
+binaries/
