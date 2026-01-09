@@ -1,0 +1,30 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# build artifacts
+bundle
+bundler
+gems/
+build/
+.build/
+Pods/
+DerivedData/
+.DerivedData/
+.swiftpm/
+
+## Various settings
+*.pbxuser
+xcuserdata/*
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
