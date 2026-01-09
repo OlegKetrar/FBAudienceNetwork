@@ -20,7 +20,7 @@ updatePackageFile() {
   fi
 
   if [[ ! -f "$file" ]]; then
-    echo "Error: $file not found"
+    echo "File $file does not exist"
     return 1
   fi
 
@@ -38,10 +38,8 @@ updatePackageFile() {
 git fetch && git pull
 
 # update FBAudienceNetwork with cocoapods
-# TODO: replace with `update --repo-update`
-
 rbenv exec bundle install
-rbenv exec bundle exec pod install
+rbenv exec bundle exec pod update
 
 # parse fetched version
 version=$(
@@ -55,8 +53,10 @@ version=$(
   ' Podfile.lock
 )
 
-# check if this version already released
-# TODO:
+if gh release list --limit 100 | grep -q "^$version"; then
+  echo "Release $version already created"
+  exit 0
+fi
 
 current_dir="$(pwd)"
 framework_path="binaries/FBAudienceNetwork.xcframework.zip"
@@ -64,17 +64,17 @@ framework_path="binaries/FBAudienceNetwork.xcframework.zip"
 rm -rf binaries
 mkdir -p binaries
 
-zip -r -X \
-  "$framework_path" \
-  "$current_dir/Pods/FBAudienceNetwork/Static/FBAudienceNetwork.xcframework"
+cd Pods/FBAudienceNetwork/Static
+zip -r -X "$current_dir/$framework_path" "FBAudienceNetwork.xcframework"
+cd "$current_dir"
 
 framework_sha=$(swift package compute-checksum "$current_dir/$framework_path")
 framework_url="https://github.com/OlegKetrar/FBAudienceNetwork/releases/download/$version/FBAudienceNetwork.xcframework.zip"
 
 # push Podfile & Podfile.lock changes
-# git add .
-# git commit -m "bump pods"
-# git push
+git add .
+git commit -m "bump pods"
+git push
 
 # update Package.swift with newest version on master
 git checkout master
